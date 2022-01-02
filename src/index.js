@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { SeasonDisplay } from './SeasonDisplay';
 
 // export const App = () => {
 //   window.navigator.geolocation.getCurrentPosition(
@@ -11,30 +12,35 @@ import React from 'react';
 
 //////////////////////////////
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    // initialize state
-    this.state = { lat: null, errorMessage: '' };
+  // constructor(props) {
+  //   super(props);
+  //   // initialize state
+  //   this.state = { lat: null, errorMessage: '' };
+  // }
+  state = { lat: null, errorMessage: '' }; // **** //
 
+  componentDidMount() {
+    // console.log('My component was rendered to the screen');
     window.navigator.geolocation.getCurrentPosition(
-      position => {
-        // update the state
-        this.setState({ lat: position.coords.latitude }); // => callBack (ASYNC) it will run at some point in the future
-      },
-      err => {
-        this.setState({ errorMessage: err.message });
-      }
+      // update state
+      position => this.setState({ lat: position.coords.latitude }),
+      err => this.setState({ errorMessage: err.message }) // => callBack (ASYNC) it will run at some point in the future
     );
   }
 
+  // componentDidUpdate() {
+  //   console.log('My component was just updated - it rerendered!');
+  // }
   render() {
-    return (
-      <div>
-        Latitude: {this.state.lat}
-        <br />
-        <p>{this.state.errorMessage ? this.state.errorMessage : 'mamma'}</p>
-      </div>
-    );
+    if (this.state.errorMessage && !this.state.lat) {
+      return <div>Error: {this.state.errorMessage}</div>;
+    }
+
+    if (!this.state.errorMessage && this.state.lat) {
+      return <SeasonDisplay lat={this.state.lat} />;
+    }
+
+    return <div>Loading...</div>;
   }
 }
 
@@ -44,3 +50,5 @@ ReactDOM.render(<App />, document.querySelector('#root'));
 - Need to get the users physical location
 - Need to determine the current month
 - Need to change text and styling based on location + month*/
+
+// **** // we can omit the constructor function because babel implement the constructor function for us
