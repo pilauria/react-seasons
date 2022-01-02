@@ -11,12 +11,30 @@ import React from 'react';
 
 //////////////////////////////
 class App extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+    // initialize state
+    this.state = { lat: null, errorMessage: '' };
+
     window.navigator.geolocation.getCurrentPosition(
-      position => console.log(position), // ==> ASYNC
-      err => console.log(err)
+      position => {
+        // update the state
+        this.setState({ lat: position.coords.latitude }); // => callBack (ASYNC) it will run at some point in the future
+      },
+      err => {
+        this.setState({ errorMessage: err.message });
+      }
     );
-    return <div>Latitude:</div>;
+  }
+
+  render() {
+    return (
+      <div>
+        Latitude: {this.state.lat}
+        <br />
+        <p>{this.state.errorMessage ? this.state.errorMessage : 'mamma'}</p>
+      </div>
+    );
   }
 }
 
