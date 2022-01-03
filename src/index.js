@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import { SeasonDisplay } from './SeasonDisplay';
 import Spinner from './Spinner';
+import Clock from './Clock';
 
 // export const App = () => {
 //   window.navigator.geolocation.getCurrentPosition(
@@ -45,7 +46,12 @@ class App extends React.Component {
   }
 
   render() {
-    return <div className='border red'>{this.renderContent()} </div>;
+    return (
+      <div>
+        <div className='border red'>{this.renderContent()} </div>
+        <Clock />
+      </div>
+    );
   }
 }
 
