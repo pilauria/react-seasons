@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { SeasonDisplay } from './SeasonDisplay';
+import Spinner from './Spinner';
 
 // export const App = () => {
 //   window.navigator.geolocation.getCurrentPosition(
@@ -23,7 +24,7 @@ class App extends React.Component {
     // console.log('My component was rendered to the screen');
     window.navigator.geolocation.getCurrentPosition(
       // update state
-      position => this.setState({ lat: position.coords.latitude }),
+      position => this.setState({ lat: position.coords.latitude }), // every time we call setState, the component re-render
       err => this.setState({ errorMessage: err.message }) // => callBack (ASYNC) it will run at some point in the future
     );
   }
@@ -31,7 +32,7 @@ class App extends React.Component {
   // componentDidUpdate() {
   //   console.log('My component was just updated - it rerendered!');
   // }
-  render() {
+  renderContent() {
     if (this.state.errorMessage && !this.state.lat) {
       return <div>Error: {this.state.errorMessage}</div>;
     }
@@ -40,15 +41,19 @@ class App extends React.Component {
       return <SeasonDisplay lat={this.state.lat} />;
     }
 
-    return <div>Loading...</div>;
+    return <Spinner message='Please accept location request' />; // we are overriding the defaulProps of the spinner
+  }
+
+  render() {
+    return <div className='border red'>{this.renderContent()} </div>;
   }
 }
 
 ReactDOM.render(<App />, document.querySelector('#root'));
 
+// **** // we can omit the constructor function because babel implement the constructor function for us
+
 /* App Challenges:
 - Need to get the users physical location
 - Need to determine the current month
 - Need to change text and styling based on location + month*/
-
-// **** // we can omit the constructor function because babel implement the constructor function for us

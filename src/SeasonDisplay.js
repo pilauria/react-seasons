@@ -23,10 +23,11 @@ const getSeason = (lat, month) => {
 
 export const SeasonDisplay = props => {
   const season = getSeason(props.lat, new Date().getMonth());
-  const { text, iconName } = seasonConfig[season];
+  // console.log(seasonConfig[season]); //=> {text: 'Burr, it is chilly', iconName: 'snowflake'}
+  const { text, iconName } = seasonConfig[season]; // destructuring object: season could be either summer or winter
 
   return (
-    <div className=''>
+    <div className={`season-display ${season}`}>
       <i className={`icon-left massive ${iconName} icon`} />
       <h1>{text}</h1>
       <i className={`icon-right massive ${iconName} icon`} />
