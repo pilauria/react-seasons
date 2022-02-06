@@ -25,7 +25,7 @@ class App extends React.Component {
     // console.log('My component was rendered to the screen');
     window.navigator.geolocation.getCurrentPosition(
       // update state
-      position => this.setState({ lat: position.coords.latitude }), // every time we call setState, the component re-render
+      position => this.setState({ lat: position.coords.latitude }), // (ASYNC) every time we call setState, the component re-render
       err => this.setState({ errorMessage: err.message }) // => callBack (ASYNC) it will run at some point in the future
     );
   }
@@ -33,6 +33,7 @@ class App extends React.Component {
   // componentDidUpdate() {
   //   console.log('My component was just updated - it rerendered!');
   // }
+
   renderContent() {
     if (this.state.errorMessage && !this.state.lat) {
       return <div>Error: {this.state.errorMessage}</div>;

@@ -1,4 +1,3 @@
-import ReactDOM from 'react-dom';
 import './SeasonDisplay.css';
 
 // create a configuration object:
@@ -22,9 +21,10 @@ const getSeason = (lat, month) => {
 };
 
 export const SeasonDisplay = props => {
+  // console.log(props.lat);
   const season = getSeason(props.lat, new Date().getMonth());
   // console.log(seasonConfig[season]); //=> {text: 'Burr, it is chilly', iconName: 'snowflake'}
-  const { text, iconName } = seasonConfig[season]; // destructuring object: season could be either summer or winter
+  const { text, iconName } = seasonConfig[season]; // destructuring object: console.log(seasonConfig[season] // {text, iconName}
 
   return (
     <div className={`season-display ${season}`}>
